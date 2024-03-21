@@ -3,6 +3,7 @@ import ImageUploader from "./ImageUploader";
 import { client } from "@gradio/client";
 import { GrNext } from "react-icons/gr";
 import * as ga from "@/libs/ga";
+import { useUser } from "@clerk/clerk-react";
 import { wrap } from "module";
 
 const apiUrls = ["/load_example", "/load_example_1", "/load_example_2"];
@@ -76,31 +77,68 @@ const models = [
   },
 ];
 
+const handleSignIn = () => {
+  history.push('/sign-in'); // Navigate to sign-in page
+};
+
+// Handler for sign-up button click
+const handleSignUp = () => {
+  history.push('/sign-up'); // Navigate to sign-up page
+};
+
 export default function ImagePipeline() {
   const [app, setApp] = useState();
   const [imageData, setImageData] = useState([]);
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const wrapperRef = useRef(null);
-  useEffect(() => {
+  const user = useUser(); // Use Clerk useUser hook
+
+  // Check if the user is authenticated using Clerk
+  if (!user.signedIn) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h2 className="text-3xl font-bold text-center mb-5">
+          Please sign in to access this feature.
+        </h2>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={handleSignIn}
+            className="btn btn-primary"
+          >
+            Sign In
+          </button>
+          <button
+            onClick={handleSignUp}
+            className="btn btn-secondary"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Load your Gradio client once the component mounts
+  if (!app) {
     (async () => {
       const a = await client(
         "https://humanaigc-outfitanyone.hf.space/--replicas/ppht9/",
         {}
       );
       setApp(a);
-    })();
 
-    const isDesktop = window.innerWidth > 1024;
-    if (wrapperRef.current && isDesktop) {
-      const height = wrapperRef.current.offsetHeight;
-      wrapperRef.current.style.height = `${height}px`;
-    }
-  }, []);
+      const isDesktop = window.innerWidth > 1024;
+      if (wrapperRef.current && isDesktop) {
+        const height = wrapperRef.current.offsetHeight;
+        wrapperRef.current.style.height = `${height}px`;
+      }
+    })();
+  }
 
   const handleGenerate = async () => {
     if (!app) return;
-    // console.log("imageData:", imageData);
+
     if (imageData.length < 2) {
       console.error("Missing imageData");
       return;
@@ -121,7 +159,6 @@ export default function ImagePipeline() {
       setIsLoading(true);
       const result = await app.predict("/get_tryon_result", imageData);
       setOutput(result.data[0].url);
-      // console.log("result", result);
       setIsLoading(false);
       ga.event({
         action: "click",
@@ -143,10 +180,10 @@ export default function ImagePipeline() {
       });
     }
   };
+
   const handlePick = async (id, type) => {
     try {
       const result = await app.predict(apiUrls[type], [id]);
-      // console.log("result", result);
       setImageData((prev) => {
         const temp = [...prev];
         temp[type] = { ...result.data[0].value };
@@ -156,6 +193,7 @@ export default function ImagePipeline() {
       console.log(e);
     }
   };
+
   return (
     <div className="lg:flex self-stretch h-full flex-col pb-8">
       <h2 className="text-3xl font-bold text-center py-5">

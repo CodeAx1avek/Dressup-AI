@@ -9,14 +9,14 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Outfit Anyone</title>
+        <title>Dressup-AI</title>
         <meta
           name="description"
-          content="Outfit Anyone: Virtual fitting of the highest quality for any clothing and any person. Secure upload of clothing images. Learn more!"
+          content="Dressup-AI: Virtual fitting of the highest quality for any clothing and any person. Secure upload of clothing images. Learn more!"
         />
         <meta
           name="keywords"
-          content="Outfit Anyone, virtual fitting, high quality, album, try, security, research, ModelScope, Hugging Face, fashion, style, innovations, Put Clothes on Models"
+          content="Dressup-AI, virtual fitting, high quality, album, try, security, research, ModelScope, Hugging Face, fashion, style, innovations, Put Clothes on Models"
         />
 
         <meta
@@ -33,12 +33,12 @@ export default function Home() {
         <meta property="og:title" content="Put Clothes on Models" />
         <meta
           property="og:description"
-          content="Outfit Anyone: Virtual fitting of the highest quality for any clothing and any person. Secure upload of clothing images. Learn more!"
+          content="Dressup-AI: Virtual fitting of the highest quality for any clothing and any person. Secure upload of clothing images. Learn more!"
         />
         <meta property="og:image" content="https://clearmindgraphics.com/site/wp-content/uploads/2017/06/shutterstock_296987657-2048x1672.jpg" />
-        <meta property="og:url" content="https://humanaigc.github.io/outfit-anyone/" />
+        <meta property="og:url" content="" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Outfit Anyone" />
+        <meta property="og:site_name" content="Dressup-AI" />
         <meta property="og:locale" content="en_US" />
       </Head>
       <main>
