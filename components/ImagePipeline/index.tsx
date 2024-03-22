@@ -4,6 +4,7 @@ import { client } from "@gradio/client";
 import { GrNext } from "react-icons/gr";
 import * as ga from "@/libs/ga";
 import { useUser } from "@clerk/clerk-react";
+import AuthenticationPage from "./AuthenticationPage";
 
 const apiUrls = ["/load_example", "/load_example_1", "/load_example_2"];
 
@@ -83,6 +84,10 @@ export default function ImagePipeline() {
   const [isLoading, setIsLoading] = useState(false);
   const wrapperRef = useRef(null);
   const user = useUser();
+
+  if (!user.signedIn) {
+    return <AuthenticationPage />;
+  }
 
   useEffect(() => {
     (async () => {
