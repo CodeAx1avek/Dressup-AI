@@ -26,6 +26,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/sign-in/[[...index]]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/sign-in/[[...index]].js"
+    ],
+    "/sign-up/[[...index]]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/sign-up/[[...index]].js"
     ]
   },
   "ampFirstPages": []

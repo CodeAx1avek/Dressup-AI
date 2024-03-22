@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import { client } from "@gradio/client";
 import { GrNext } from "react-icons/gr";
 import * as ga from "@/libs/ga";
 import { useUser } from "@clerk/clerk-react";
-import { wrap } from "module";
+import { useRouter } from "next/router";
 
 const apiUrls = ["/load_example", "/load_example_1", "/load_example_2"];
 
@@ -77,15 +77,6 @@ const models = [
   },
 ];
 
-const handleSignIn = () => {
-  history.push('/sign-in'); // Navigate to sign-in page
-};
-
-// Handler for sign-up button click
-const handleSignUp = () => {
-  history.push('/sign-up'); // Navigate to sign-up page
-};
-
 export default function ImagePipeline() {
   const [app, setApp] = useState();
   const [imageData, setImageData] = useState([]);
@@ -93,6 +84,17 @@ export default function ImagePipeline() {
   const [isLoading, setIsLoading] = useState(false);
   const wrapperRef = useRef(null);
   const user = useUser(); // Use Clerk useUser hook
+  const router = useRouter();
+
+  
+  const handleSignIn = () => {
+  router.push('/sign-in'); // Navigate to sign-in page
+  };
+
+// Handler for sign-up button click
+  const handleSignUp = () => {
+  router.push('/sign-up'); // Navigate to sign-up page
+  };
 
   // Check if the user is authenticated using Clerk
   if (!user.signedIn) {
@@ -119,7 +121,7 @@ export default function ImagePipeline() {
     );
   }
 
-  // Load your Gradio client once the component mounts
+
   if (!app) {
     (async () => {
       const a = await client(
