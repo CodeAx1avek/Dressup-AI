@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import ImagePipeline from "@/components/ImagePipeline";
 import AutoSlider from "@/components/AutoSlider";
+import { UserButton } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,6 +42,9 @@ export default function Home() {
         <meta property="og:site_name" content="Dressup-AI" />
         <meta property="og:locale" content="en_US" />
       </Head>
+      <header>
+        <UserButton />
+      </header>
       <main>
         <section className="hero min-h-screen relative bg-center bg-no-repeat bg-cover">
           <div className={"absolute top-0 left-0 right-0 bottom-0"}>            

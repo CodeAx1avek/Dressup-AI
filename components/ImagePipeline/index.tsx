@@ -4,7 +4,6 @@ import { client } from "@gradio/client";
 import { GrNext } from "react-icons/gr";
 import * as ga from "@/libs/ga";
 import { useUser } from "@clerk/clerk-react";
-import { useRouter } from "next/router";
 
 const apiUrls = ["/load_example", "/load_example_1", "/load_example_2"];
 
@@ -83,64 +82,27 @@ export default function ImagePipeline() {
   const [output, setOutput] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const wrapperRef = useRef(null);
-  const user = useUser(); // Use Clerk useUser hook
-  const router = useRouter();
+  const user = useUser();
 
-  
-  const handleSignIn = () => {
-  router.push('/sign-in'); // Navigate to sign-in page
-  };
-
-// Handler for sign-up button click
-  const handleSignUp = () => {
-  router.push('/sign-up'); // Navigate to sign-up page
-  };
-
-  // Check if the user is authenticated using Clerk
-  if (!user.signedIn) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h2 className="text-3xl font-bold text-center mb-5">
-          Please sign in to access this feature.
-        </h2>
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={handleSignIn}
-            className="btn btn-primary"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={handleSignUp}
-            className="btn btn-secondary"
-          >
-            Sign Up
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-
-  if (!app) {
+  useEffect(() => {
     (async () => {
       const a = await client(
         "https://humanaigc-outfitanyone.hf.space/--replicas/ppht9/",
         {}
       );
       setApp(a);
-
-      const isDesktop = window.innerWidth > 1024;
-      if (wrapperRef.current && isDesktop) {
-        const height = wrapperRef.current.offsetHeight;
-        wrapperRef.current.style.height = `${height}px`;
-      }
     })();
-  }
+
+    const isDesktop = window.innerWidth > 1024;
+    if (wrapperRef.current && isDesktop) {
+      const height = wrapperRef.current.offsetHeight;
+      wrapperRef.current.style.height = `${height}px`;
+    }
+  }, []);
 
   const handleGenerate = async () => {
     if (!app) return;
-
+    // console.log("imageData:", imageData);
     if (imageData.length < 2) {
       console.error("Missing imageData");
       return;
@@ -161,6 +123,7 @@ export default function ImagePipeline() {
       setIsLoading(true);
       const result = await app.predict("/get_tryon_result", imageData);
       setOutput(result.data[0].url);
+      // console.log("result", result);
       setIsLoading(false);
       ga.event({
         action: "click",
@@ -182,7 +145,6 @@ export default function ImagePipeline() {
       });
     }
   };
-
   const handlePick = async (id, type) => {
     try {
       const result = await app.predict(apiUrls[type], [id]);
@@ -195,7 +157,6 @@ export default function ImagePipeline() {
       console.log(e);
     }
   };
-
   return (
     <div className="lg:flex self-stretch h-full flex-col pb-8">
       <h2 className="text-3xl font-bold text-center py-5">

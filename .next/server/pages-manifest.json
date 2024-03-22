@@ -2,7 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/sign-in/[[...index]]": "pages/sign-in/[[...index]].js",
   "/": "pages/index.js",
-  "/sign-up/[[...index]]": "pages/sign-up/[[...index]].js"
+  "/sign-in/[[...index]]": "pages/sign-in/[[...index]].js",
+  "/home": "pages/home.js"
 }
