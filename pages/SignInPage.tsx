@@ -2,15 +2,19 @@
 import React from 'react';
 import { SignIn } from '@clerk/nextjs';
 
-// Define the SignInPage component
-const SignInPage = () => {
+// Define the Page component
+export default function Page() {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh' // Adjust the height as needed
+      }}
+    >
       {/* Render the SignIn component */}
       <SignIn />
     </div>
   );
-};
-
-// Export the SignInPage component as default
-export default SignInPage;
+}
