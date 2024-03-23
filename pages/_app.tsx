@@ -1,12 +1,13 @@
-// Import required modules and components
 import '@/styles/globals.css';
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, useSession } from "@clerk/nextjs";
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import * as ga from '@/libs/ga';
 import { useEffect } from 'react';
+import AuthenticationPage from './AuthenticationPage';
+import SignInPage from './SignIn'; // Import your sign-in page component
+import SignUpPage from './SignUp'; // Import your sign-up page component
 
-// Define the App component
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
@@ -25,12 +26,30 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  // Render the ClerkProvider component wrapping the Component and passing pageProps
   return (
     <ClerkProvider
       frontendApi={process.env.pk_test_YWNjdXJhdGUtbW9yYXktNS5jbGVyay5hY2NvdW50cy5kZXYk}
     >
-      <Component {...pageProps} />
+      <AuthWrapper>
+        <Component {...pageProps} />
+      </AuthWrapper>
     </ClerkProvider>
   );
+}
+
+function AuthWrapper({ children }: { children: React.ReactNode }) {
+  const { session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Define an array of routes that should not trigger redirection
+    const nonRedirectRoutes = ["/SignInPage", "/SignUpPage"];
+
+    // Check if there's no active session and the current route is not exempt from redirection
+    if (!session && !nonRedirectRoutes.includes(router.pathname)) {
+      router.push("/AuthenticationPage"); // Redirect to the authentication page
+    }
+  }, [session, router]);
+
+  return <>{children}</>;
 }
