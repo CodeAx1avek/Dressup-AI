@@ -5,16 +5,23 @@ const AuthenticationPage = () => {
   const router = useRouter();
 
   const handleSignIn = () => {
-    console.log("Attempting to navigate to /SignInPage");
-    router.push("/SignInPage");
+    try {
+      console.log("Attempting to navigate to /SignInPage");
+      router.push("/SignInPage");
+    } catch (error) {
+      console.error("Error navigating to /SignInPage:", error);
+    }
   };
   
   const handleSignUp = () => {
-    console.log("Attempting to navigate to /SignUpPage");
-    router.push("/SignUpPage");
+    try {
+      console.log("Attempting to navigate to /SignUpPage");
+      router.push("/SignUpPage");
+    } catch (error) {
+      console.error("Error navigating to /SignUpPage:", error);
+    }
   };
   
-
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h2 className="text-3xl font-bold text-center mb-5">

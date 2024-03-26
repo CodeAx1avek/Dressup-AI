@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"..\\\\node_modules\\\\@gradio\\\\client\\\\dist\\\\index.js -> ./wrapper-6f348d45.js\":{\"id\":\"..\\\\node_modules\\\\@gradio\\\\client\\\\dist\\\\index.js -> ./wrapper-6f348d45.js\",\"files\":[\"static/chunks/node_modules_gradio_client_dist_wrapper-6f348d45_js.js\"]},\"..\\\\node_modules\\\\@gradio\\\\client\\\\dist\\\\index.js -> node:buffer\":{\"id\":\"..\\\\node_modules\\\\@gradio\\\\client\\\\dist\\\\index.js -> node:buffer\",\"files\":[]}}"
